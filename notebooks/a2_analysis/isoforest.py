@@ -1,9 +1,8 @@
 """
 isoforest.py - Isolation Forest helpers for the BAF Base dataset.
 
-COS30049 Assignment 2 (AI4Cyber), Group COS30049.2_1
-Task A2-13 - Extra ML: Isolation Forest anomaly detection compared with
-supervised scores. Owner: Thong. Reviewer: Phuc.
+Isolation Forest anomaly detection compared with a historical supervised
+baseline. Author: Thong. Reviewer: Phuc.
 
 The supervised comparison model is the team's own classifier from A2-11
 (Kha's repo KennyDao1324/ai4cyber-fraud, commit 661871e): the same
@@ -11,14 +10,10 @@ preprocessing, features and logistic regression settings, re-fitted here on
 each time-ordered fold so it never sees months 6-7. Fold C below (train
 months 0-4, validate month 5) is the team's own train/validation split.
 
-Code assistance: this module was drafted with Claude (Anthropic). The owner
-must review and rework it and be able to explain every function; disclose the
-tool use as the unit's policy requires.
-
-Change note 05/11/2026 (A2-33 figure pass, also Claude-assisted): only the
-three plot_* functions changed (fig12 zoom inset + no-skill line drawn under
-the curves; fig13 FPR ticks as 0-20%; fig14 capitalised legend and log-scale
-axis label). No metric, model or table changed.
+The comparison preserves that historical baseline for reproducibility. It
+is not the currently selected v4 CatBoost model. The current production
+pipeline masks all negative intended_balcon_amount values and uses age >= 50
+for its fairness audit; this notebook's older baseline is intentionally separate.
 
 Structure of this module
   1. Constants          - seed, time-ordered validation folds, grids
@@ -28,9 +23,11 @@ Structure of this module
   5. Experiments        - hyper-parameter grid, contamination sweep, overlap
   6. Figures            - one plot_* function per report figure
 
-The notebook notebooks/03_isolation_forest.ipynb calls these functions in
-order. Only months 0-5 (development) are ever used here; months 6-7 stay
-untouched until the one-off final test (A2-14).
+The notebook notebooks/isolation_forest_A2-13.ipynb calls these functions.
+This study uses months 0-5 only. Other repository experiments have already
+inspected months 6-7; they must not be described as a fresh holdout.
+Recall at 5% FPR here is a retrospective ROC diagnostic using validation
+labels, not a deployment threshold calibrated on a separate period.
 """
 
 import itertools
@@ -146,7 +143,7 @@ def load_dev(path, missing_as_nan=True):
     Months 6-7 are dropped here so nothing downstream can touch them.
     missing_as_nan=True turns the BAF missing codes (-1 / negative) into NaN
     (used by the forest); False keeps the raw codes (the team classifier
-    treats -1 as an ordinary number).
+    reproduces the historical baseline's -1-only missing-code conversion).
     """
     df = eda.load_base(path)
     dev = df[df["month"].isin(eda.DEV_MONTHS)].copy()

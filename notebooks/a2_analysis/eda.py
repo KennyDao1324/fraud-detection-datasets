@@ -1,9 +1,8 @@
 """
 eda.py - Exploratory data analysis helpers for the BAF Base dataset.
 
-COS30049 Assignment 2 (AI4Cyber), Group COS30049.2_1
-Task A2-09 - EDA: class balance, fraud rate by category, numeric
-distributions, correlations, drift. Owner: Thong. Reviewer: Kha.
+Class balance, fraud rates, numeric distributions, correlations and drift.
+Author: Thong. Reviewer: Kha.
 
 Structure of this module
   1. Constants          - datasheet facts, colours, sizes, thresholds
@@ -16,7 +15,7 @@ Structure of this module
   5. Export             - save_figure (with width check), export_chart_data
                           (JSON for the A3 React dashboard)
 
-The notebook notebooks/02_eda.ipynb calls these functions in order.
+The notebook notebooks/eda_A2-09.ipynb calls these functions in order.
 Nothing here is random, so results are fully deterministic.
 """
 
@@ -60,9 +59,8 @@ DEV_MONTHS = range(0, 6)
 SPLIT_MONTH = 5.5                     # boundary drawn between month 5 and 6
 
 # Fairness split on customer_age (decade bins 10, 20, ..., 90).
-# NFR010 in A1 says ">50 vs <=50", which on decade bins means 60+.
-# The BAF literature is read by some as ">=50" (50+). Both are reported;
-# the team must confirm one before A2-16 (see Finding 10).
+# Both historical definitions are reported for comparison. The current
+# production fairness audit uses >=50 (50+), not >50 (60+).
 AGE_SPLIT = 50
 
 # Analysis thresholds (named so the notebook text can refer to them).
@@ -688,8 +686,8 @@ def plot_target_association(assoc, top=None):
 def plot_fraud_by_age(df, split=AGE_SPLIT):
     """Figure 9 - fraud rate by age band; second tick line = share of rows.
 
-    Two boundaries are drawn because the fairness group is not yet fixed:
-    dashed = "> 50" (A1 NFR010 as written, i.e. 60+), dotted = ">= 50".
+    Two boundaries compare historical definitions: dashed = ">50" (60+),
+    dotted = ">=50" (50+, used in the current production fairness audit).
     """
     g = fraud_rate_table(df, "customer_age").reset_index()
     fig, ax = plt.subplots(figsize=(A4_WIDTH, 2.7))
@@ -708,9 +706,9 @@ def plot_fraud_by_age(df, split=AGE_SPLIT):
     top = ax.get_ylim()[1]
     ax.axvline(gt, color=NEUTRAL, linestyle="--", linewidth=0.9)
     ax.axvline(ge, color=NEUTRAL, linestyle=":", linewidth=0.9)
-    ax.text(gt + 0.1, top * 0.95, f"> {split}\n(NFR010 as written)",
+    ax.text(gt + 0.1, top * 0.95, f"> {split}\n(historical comparison)",
             ha="left", va="top", fontsize=7)
-    ax.text(ge - 0.1, top * 0.95, f"≥ {split}\n(alternative)",
+    ax.text(ge - 0.1, top * 0.95, f"≥ {split}\n(current audit)",
             ha="right", va="top", fontsize=7)
     ax.grid(axis="x", visible=False)
     ax.set_title("Fraud rate rises with every age band (months 0-5)")
