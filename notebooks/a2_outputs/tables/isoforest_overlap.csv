@@ -1,0 +1,5 @@
+,frauds,share_of_frauds_pct
+caught by both,74,5.244507441530829
+only Isolation Forest,37,2.6222537207654146
+only team logistic regression,625,44.29482636428065
+caught by neither,675,47.838412473423105

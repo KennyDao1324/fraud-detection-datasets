@@ -1,0 +1,7 @@
+val_month,top_k_features,features,pr_auc,roc_auc,recall_at_5fpr
+3,4,"current_address_months_count, credit_risk_score, proposed_credit_limit, date_of_birth_distinct_emails_4w",0.028013240566753736,0.7088049370277214,0.19899425287356323
+3,8,"current_address_months_count, credit_risk_score, proposed_credit_limit, date_of_birth_distinct_emails_4w, name_email_similarity, bank_branch_count_8w, prev_address_months_count, bank_months_count",0.014773589478187167,0.6287662770684951,0.09913793103448276
+4,4,"current_address_months_count, credit_risk_score, proposed_credit_limit, date_of_birth_distinct_emails_4w",0.03158523319733459,0.6988786514459857,0.19146005509641872
+4,8,"current_address_months_count, credit_risk_score, proposed_credit_limit, date_of_birth_distinct_emails_4w, name_email_similarity, bank_branch_count_8w, prev_address_months_count, bank_months_count",0.018331256117193585,0.6306969996589398,0.1046831955922865
+5,4,"current_address_months_count, credit_risk_score, proposed_credit_limit, date_of_birth_distinct_emails_4w",0.02711878080298937,0.6450698989730548,0.17647058823529413
+5,8,"current_address_months_count, credit_risk_score, proposed_credit_limit, date_of_birth_distinct_emails_4w, name_email_similarity, bank_branch_count_8w, prev_address_months_count, bank_months_count",0.016801575432931072,0.5938083009352096,0.08788093550673282

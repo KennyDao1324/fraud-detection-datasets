@@ -36,6 +36,7 @@ In PyCharm, open the project folder and select the `fraudsuite` conda environmen
 | `training_model/cluster.py` | Clustering launcher |
 | `src/`, `scripts/`, `docs/` | Original dataset implementation, utilities and provenance |
 | `artifacts/`, `checkpoint/`, `outputs/` | Earlier baseline models and evaluation evidence |
+| `notebooks/eda_A2-09.ipynb`, `notebooks/isolation_forest_A2-13.ipynb` | Assignment 2 analysis notebooks (EDA of BAF Base; Isolation Forest vs logistic regression) with stored outputs; helper code in `notebooks/a2_analysis/`; need `Base.csv` in `experiment_suite/dataset/baf/` |
 
 Small `__init__.py`, `.gitkeep` and launcher files support packaging or folder layout; the main implementation lives in the source and training modules.
 
